@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Professional Cyber Security Portfolio of Meer Md. Saif - Pentester, Researcher, and Developer." />
+    <title>Meer Md. Saif | Cyber Security Portfolio</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cyber: {
+                green: '#00ff41',
+                red: '#ff003c',
+                purple: '#7b2cbf',
+                black: '#08080c',
+                dark: '#12121a',
+                border: '#1f1f2e',
+                text: '#f0f0f5',
+                dim: '#9494b8',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+      @layer base {
+        body {
+          @apply bg-cyber-black text-cyber-text font-sans selection:bg-cyber-purple selection:text-white;
+          background-image: 
+            radial-gradient(circle at 0% 0%, rgba(123, 44, 191, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 100% 100%, rgba(0, 255, 65, 0.02) 0%, transparent 50%);
+          background-attachment: fixed;
+        }
+      }
+
+      @layer components {
+        .bento-grid {
+          @apply grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[minmax(200px,auto)];
+        }
+        
+        .cyber-card {
+          @apply bg-cyber-dark/40 backdrop-blur-sm border border-cyber-border p-6 rounded-3xl transition-all duration-500 hover:border-cyber-purple/50 flex flex-col relative overflow-hidden;
+        }
+
+        .cyber-card-green {
+          @apply bg-cyber-dark/40 backdrop-blur-sm border border-cyber-border p-6 rounded-3xl transition-all duration-500 hover:border-cyber-green/50 flex flex-col relative overflow-hidden;
+        }
+        
+        .card-title {
+          @apply text-[10px] font-mono text-cyber-dim uppercase tracking-[4px] mb-4 flex items-center gap-2;
+        }
+
+        .card-title-green {
+          @apply text-[10px] font-mono text-cyber-green uppercase tracking-[4px] mb-4 flex items-center gap-2 opacity-80;
+        }
+
+        .card-title::after, .card-title-green::after {
+          content: "";
+          @apply h-[1px] flex-1 bg-cyber-border;
+        }
+        
+        .scanline {
+          width: 100%;
+          height: 100px;
+          z-index: 100;
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(123, 44, 191, 0.03) 50%, rgba(0, 0, 0, 0) 100%);
+          @apply fixed left-0 pointer-events-none;
+          animation: scanline 10s linear infinite;
+        }
+        
+        .terminal-content::after {
+          content: "|";
+          @apply text-cyber-purple ml-1;
+          animation: blink 1s step-end infinite;
+        }
+      }
+
+      @keyframes scanline {
+        0% { top: -100px; }
+        100% { top: 100vh; }
+      }
+
+      @keyframes blink {
+        50% { opacity: 0; }
+      }
+
+      /* Glitch Effect */
+      .glitch-text {
+        position: relative;
+        display: inline-block;
+      }
+
+      .glitch-text::before,
+      .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+      }
+
+      .glitch-text::before {
+        color: #7b2cbf;
+        z-index: -1;
+        animation: glitch-anim-1 2s infinite linear alternate-reverse;
+      }
+
+      .glitch-text::after {
+        color: #ff003c;
+        z-index: -2;
+        animation: glitch-anim-2 2s infinite linear alternate-reverse;
+      }
+
+      @keyframes glitch-anim-1 {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+      }
+
+      @keyframes glitch-anim-2 {
+        0% { transform: translate(0); }
+        20% { transform: translate(2px, -2px); }
+        40% { transform: translate(2px, 2px); }
+        60% { transform: translate(-2px, -2px); }
+        80% { transform: translate(-2px, 2px); }
+        100% { transform: translate(0); }
+      }
+
+      /* Scroll reveal classes */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .reveal-scale {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .reveal-scale.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
+  </head>
+  <body class="selection:bg-cyber-purple selection:text-white">
+    <div class="scanline"></div>
+    
+    <!-- Scroll Progress -->
+    <div class="fixed top-0 left-0 right-0 h-1 bg-cyber-purple origin-left z-[60] scroll-progress" style="transform: scaleX(0);"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-cyber-black/80 backdrop-blur-xl border-b border-cyber-border">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-cyber-purple/20 border border-cyber-purple/40 rounded-xl flex items-center justify-center">
+            <i data-lucide="shield" class="text-cyber-purple w-5 h-5"></i>
+          </div>
+          <span class="font-mono font-bold text-cyber-text tracking-[0.2em] uppercase hidden sm:block">MEER.SAIF</span>
+        </div>
+        <div class="flex gap-10 items-center">
+          <a href="#about" class="text-cyber-dim hover:text-cyber-purple font-mono text-[10px] uppercase tracking-widest transition-all hover:scale-110">About</a>
+          <a href="#skills" class="text-cyber-dim hover:text-cyber-purple font-mono text-[10px] uppercase tracking-widest transition-all hover:scale-110">Skills</a>
+          <a href="#projects" class="text-cyber-dim hover:text-cyber-purple font-mono text-[10px] uppercase tracking-widest transition-all hover:scale-110">Projects</a>
+          <a href="#achievements" class="text-cyber-dim hover:text-cyber-purple font-mono text-[10px] uppercase tracking-widest transition-all hover:scale-110">Honors</a>
+          <a href="#contact" class="text-cyber-dim hover:text-cyber-purple font-mono text-[10px] uppercase tracking-widest transition-all hover:scale-110">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6">
+      <!-- Big Hero -->
+      <section class="min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center w-full relative">
+          <!-- Background Glow -->
+          <div class="absolute -top-24 -left-24 w-[500px] h-[500px] bg-cyber-purple/10 rounded-full blur-[150px] pointer-events-none"></div>
+          
+          <div class="relative z-20 reveal pl-0 md:pl-10 border-l-0 md:border-l border-cyber-border/40">
+            <div class="inline-block px-4 py-1.5 border border-cyber-purple/30 rounded-lg text-[10px] font-mono text-cyber-purple mb-8 uppercase tracking-[0.2em] bg-cyber-purple/5 backdrop-blur-sm">
+              <span class="inline-block w-2 h-2 rounded-full bg-cyber-purple mr-2 animate-pulse shadow-[0_0_10px_#7b2cbf]"></span>
+              Connection Established // Protocol S-7
+            </div>
+            
+            <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-[110px] font-black text-cyber-text leading-[0.85] mb-10 tracking-tighter">
+              <span class="block glitch-text" data-text="MEER">MEER</span>
+              <span class="text-cyber-purple block italic whitespace-nowrap" data-text="MD. SAIF">MD. SAIF</span>
+            </h1>
+            
+            <div class="flex items-center gap-6 group">
+              <div class="h-[2px] w-12 bg-cyber-purple shadow-[0_0_15px_#7b2cbf] transition-all group-hover:w-20"></div>
+              <p class="text-[10px] md:text-xs font-mono text-cyber-dim uppercase tracking-[0.4em] leading-relaxed">
+                Elite Security Researcher // Moon Breathing
+              </p>
+            </div>
+          </div>
+
+          <div class="relative z-10 reveal" style="transition-delay: 0.3s;">
+            <div class="aspect-[4/5] md:aspect-square max-w-lg ml-auto rounded-[60px] overflow-hidden border border-cyber-border relative group shadow-[0_30px_100px_rgba(0,0,0,0.8)]">
+              <div class="absolute inset-0 bg-cyber-purple/10 mix-blend-color z-10"></div>
+              <img 
+                src="ko.png" 
+                alt="Meer Md. Saif" 
+                class="w-full h-full object-cover grayscale brightness-90 contrast-110 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 scale-110 group-hover:scale-100"
+                referrerPolicy="no-referrer"
+              />
+              <div class="absolute bottom-10 left-10 z-20">
+                <div class="bg-cyber-black/60 backdrop-blur-2xl border border-white/5 p-6 rounded-3xl shadow-2xl">
+                  <p class="text-[10px] font-mono text-cyber-purple mb-2 flex items-center gap-2">
+                    <i data-lucide="globe" class="w-2.5 h-2.5 animate-spin"></i> SECTOR_ALPHA
+                  </p>
+                  <p class="text-lg text-white font-black tracking-tight tracking-[0.1em]">VOID_RUNNER // 01</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bento Section -->
+      <section id="about" class="pt-32 mb-20">
+        <div class="reveal mb-16">
+          <div class="flex items-center gap-6 mb-4">
+            <span class="text-cyber-purple font-mono text-lg font-bold">01</span>
+            <div class="h-[1px] flex-1 bg-cyber-border"></div>
+          </div>
+          <h2 class="text-4xl md:text-7xl font-black tracking-tight mb-6 uppercase italic">THE CORE</h2>
+          <p class="text-zinc-500 font-mono text-sm max-w-xl uppercase tracking-widest opacity-60">Digital biological profile // Researcher data</p>
+        </div>
+
+        <div class="bento-grid">
+          <!-- Short Bio -->
+          <div class="md:col-span-2 md:row-span-1 cyber-card reveal-scale">
+            <div class="card-title">Manifesto</div>
+            <div class="h-full flex flex-col justify-center">
+              <p class="text-2xl text-cyber-text leading-snug font-light italic">
+                "In the digital void, eyes are everywhere. I am the <span class="text-cyber-purple font-black">Six-Eyed Guardian</span>, slicing through encryption layers to reveal the truth."
+              </p>
+              <div class="mt-8 flex gap-8">
+                <div class="flex flex-col">
+                  <span class="text-[10px] font-mono text-cyber-dim uppercase tracking-widest">Technique</span>
+                  <span class="text-sm text-cyber-text font-bold uppercase tracking-tighter">Offensive Moon</span>
+                </div>
+                <div class="w-[1px] h-10 bg-cyber-border self-center"></div>
+                <div class="flex flex-col">
+                  <span class="text-[10px] font-mono text-cyber-dim uppercase tracking-widest">Objective</span>
+                  <span class="text-sm text-cyber-text font-bold uppercase tracking-tighter">Absolute Security</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Identity Data -->
+          <div class="md:col-span-2 md:row-span-1 cyber-card reveal-scale">
+            <div class="card-title">Identity Registry</div>
+            <div class="flex items-center gap-8 py-4">
+              <div class="w-24 h-24 rounded-3xl overflow-hidden border-2 border-cyber-purple/40 rotate-3 transition-transform hover:rotate-0 duration-500">
+                <img src="ko.png" class="w-full h-full object-cover grayscale brightness-75 hover:brightness-100 transition-all" referrerPolicy="no-referrer" />
+              </div>
+              <div>
+                <h3 class="text-3xl font-black text-cyber-text uppercase tracking-tight">MEER MD. SAIF</h3>
+                <p class="text-sm font-mono text-cyber-purple font-bold tracking-[0.2em] mt-1">RANK: UPPER MOON SECURITY</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Philosophy -->
+          <div class="md:col-span-1 md:row-span-1 cyber-card p-0 reveal-scale">
+            <div class="px-6 pt-6"><div class="card-title">Philosophy</div></div>
+            <div class="relative flex-1 group">
+              <img 
+                src="k.png" 
+                class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" 
+                referrerPolicy="no-referrer"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black via-cyber-black/40 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 right-6">
+                <p class="text-[10px] font-mono text-cyber-purple mb-1 uppercase tracking-[0.3em] font-bold">Focus</p>
+                <p class="text-lg text-white font-black leading-[0.9] uppercase italic">UNWAVERING // PRECISION</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tech Stack -->
+          <div class="md:col-span-1 md:row-span-2 cyber-card reveal-scale">
+            <div class="card-title">The Arsenal</div>
+            <div class="flex flex-wrap gap-2.5 mt-2">
+              <span class="px-4 py-2 border border-cyber-border rounded-xl font-mono text-[10px] bg-cyber-purple/5 text-cyber-text hover:bg-cyber-purple/20 hover:border-cyber-purple/40 transition-all cursor-default uppercase">Metasploit</span>
+              <span class="px-4 py-2 border border-cyber-border rounded-xl font-mono text-[10px] bg-cyber-purple/5 text-cyber-text hover:bg-cyber-purple/20 hover:border-cyber-purple/40 transition-all cursor-default uppercase">Wireshark</span>
+              <span class="px-4 py-2 border border-cyber-border rounded-xl font-mono text-[10px] bg-cyber-purple/5 text-cyber-text hover:bg-cyber-purple/20 hover:border-cyber-purple/40 transition-all cursor-default uppercase">Python</span>
+              <span class="px-4 py-2 border border-cyber-border rounded-xl font-mono text-[10px] bg-cyber-purple/5 text-cyber-text hover:bg-cyber-purple/20 hover:border-cyber-purple/40 transition-all cursor-default uppercase">Linux</span>
+              <span class="px-4 py-2 border border-cyber-border rounded-xl font-mono text-[10px] bg-cyber-purple/5 text-cyber-text hover:bg-cyber-purple/20 hover:border-cyber-purple/40 transition-all cursor-default uppercase">Burp Suite</span>
+              <span class="px-4 py-2 border border-cyber-border rounded-xl font-mono text-[10px] bg-cyber-purple/5 text-cyber-text hover:bg-cyber-purple/20 hover:border-cyber-purple/40 transition-all cursor-default uppercase">Nmap</span>
+              <span class="px-4 py-2 border border-cyber-border rounded-xl font-mono text-[10px] bg-cyber-purple/5 text-cyber-text hover:bg-cyber-purple/20 hover:border-cyber-purple/40 transition-all cursor-default uppercase">Cryptex</span>
+            </div>
+          </div>
+
+          <!-- Featured Work -->
+          <div class="md:col-span-1 md:row-span-2 bg-gradient-to-br from-cyber-purple/20 to-cyber-black border border-cyber-purple/10 p-8 rounded-[40px] reveal-scale shadow-2xl">
+            <div class="card-title">Shadow Projects</div>
+            <div class="space-y-10 mt-6">
+              <div class="group/item cursor-pointer">
+                <div class="flex justify-between items-start mb-2">
+                  <h4 class="text-lg font-black text-cyber-text group-hover/item:text-cyber-purple transition-all italic uppercase tracking-tighter">VulnScanner_X</h4>
+                  <a href="#" class="p-2 border border-cyber-border rounded-lg group-hover/item:border-cyber-purple/40 transition-all">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 text-cyber-dim group-hover/item:text-cyber-purple"></i>
+                  </a>
+                </div>
+                <p class="text-[11px] text-cyber-dim leading-relaxed font-mono opacity-80 uppercase">Automated zero-day scanner for enterprise environments.</p>
+              </div>
+              <div class="group/item cursor-pointer">
+                <div class="flex justify-between items-start mb-2">
+                  <h4 class="text-lg font-black text-cyber-text group-hover/item:text-cyber-purple transition-all italic uppercase tracking-tighter">Crypto_Guard</h4>
+                  <a href="#" class="p-2 border border-cyber-border rounded-lg group-hover/item:border-cyber-purple/40 transition-all">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 text-cyber-dim group-hover/item:text-cyber-purple"></i>
+                  </a>
+                </div>
+                <p class="text-[11px] text-cyber-dim leading-relaxed font-mono opacity-80 uppercase">Quantum-ready encryption protocol for volatile data.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live System Console -->
+          <div class="md:col-span-2 md:row-span-2 bg-black/80 border-2 border-cyber-purple/30 p-8 rounded-[40px] reveal-scale flex flex-col shadow-[0_0_50px_rgba(123,44,191,0.1)]">
+            <div class="card-title">System Runtime</div>
+            <div class="font-mono text-xs md:text-sm text-cyber-purple leading-relaxed whitespace-pre-wrap flex-1 terminal-content opacity-90 overflow-hidden"></div>
+            <div class="h-2"></div>
+          </div>
+
+          <!-- Field Stats -->
+          <div class="md:col-span-2 md:row-span-1 cyber-card-green reveal-scale">
+            <div class="card-title-green">Performance Metrics</div>
+            <div class="flex justify-around items-center h-full py-4">
+              <div class="text-center group cursor-pointer">
+                <div class="text-5xl font-black text-cyber-text group-hover:text-cyber-green transition-all tracking-tighter">42<span class="text-cyber-green text-2xl">+</span></div>
+                <div class="text-[10px] uppercase tracking-[0.3em] text-cyber-dim font-bold mt-2">BREACHES BLOCKED</div>
+              </div>
+              <div class="h-16 w-[1px] bg-cyber-border"></div>
+              <div class="text-center group cursor-pointer">
+                <div class="text-5xl font-black text-cyber-text group-hover:text-cyber-red transition-all tracking-tighter">08</div>
+                <div class="text-[10px] uppercase tracking-[0.3em] text-cyber-dim font-bold mt-2 text-cyber-red/80">CRITICAL_VULNS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills" class="mt-32 pt-20 border-t border-cyber-border">
+        <div class="reveal mb-16">
+          <div class="flex items-center gap-6 mb-4">
+            <span class="text-cyber-purple font-mono text-lg font-bold">02</span>
+            <div class="h-[1px] flex-1 bg-cyber-border"></div>
+          </div>
+          <h2 class="text-4xl md:text-7xl font-black tracking-tight mb-6 uppercase italic">THE ARSENAL</h2>
+          <p class="text-zinc-500 font-mono text-sm max-w-xl uppercase tracking-widest opacity-60">Offensive & Defensive Tooling</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="cyber-card-green reveal-scale">
+            <div class="card-title-green">Penetration</div>
+            <ul class="space-y-4 mt-2">
+              <li class="text-xs font-mono flex items-center gap-3 group cursor-default">
+                <i data-lucide="chevron-right" class="text-cyber-green w-4 h-4 transition-transform group-hover:translate-x-1"></i> 
+                <span class="group-hover:text-cyber-green transition-colors">Burp Suite Enterprise</span>
+              </li>
+              <li class="text-xs font-mono flex items-center gap-3 group cursor-default">
+                <i data-lucide="chevron-right" class="text-cyber-green w-4 h-4 transition-transform group-hover:translate-x-1"></i> 
+                <span class="group-hover:text-cyber-green transition-colors">Metasploit Pro / cobalt-strike</span>
+              </li>
+              <li class="text-xs font-mono flex items-center gap-3 group cursor-default">
+                <i data-lucide="chevron-right" class="text-cyber-green w-4 h-4 transition-transform group-hover:translate-x-1"></i> 
+                <span class="group-hover:text-cyber-green transition-colors">Nmap Advanced Scripting</span>
+              </li>
+            </ul>
+          </div>
+          <div class="cyber-card reveal-scale" style="transition-delay: 0.1s;">
+            <div class="card-title">Development</div>
+            <ul class="space-y-4 mt-2">
+              <li class="text-xs font-mono flex items-center gap-3 group cursor-default">
+                <i data-lucide="chevron-right" class="text-cyber-purple w-4 h-4 transition-transform group-hover:translate-x-1"></i> 
+                <span class="group-hover:text-cyber-purple transition-colors">Rust (WASM / Low-level)</span>
+              </li>
+              <li class="text-xs font-mono flex items-center gap-3 group cursor-default">
+                <i data-lucide="chevron-right" class="text-cyber-purple w-4 h-4 transition-transform group-hover:translate-x-1"></i> 
+                <span class="group-hover:text-cyber-purple transition-colors">Python (Security Automations)</span>
+              </li>
+              <li class="text-xs font-mono flex items-center gap-3 group cursor-default">
+                <i data-lucide="chevron-right" class="text-cyber-purple w-4 h-4 transition-transform group-hover:translate-x-1"></i> 
+                <span class="group-hover:text-cyber-purple transition-colors">TS / React / Secure Architecture</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="mt-32 pt-20 border-t border-cyber-border">
+        <div class="reveal mb-16">
+          <div class="flex items-center gap-6 mb-4">
+            <span class="text-cyber-green font-mono text-lg font-bold tracking-widest">03</span>
+            <div class="h-[1px] flex-1 bg-cyber-border"></div>
+          </div>
+          <h2 class="text-4xl md:text-7xl font-black tracking-tight mb-6 uppercase italic"><span class="text-cyber-green">PROJECT</span> REGISTRY</h2>
+          <p class="text-zinc-500 font-mono text-sm max-w-xl uppercase tracking-widest opacity-60">Verified deployment nodes // Public access points</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="cyber-card-green reveal-scale">
+            <div class="card-title-green">Project // 01</div>
+            <h4 class="text-2xl font-black text-cyber-text italic uppercase tracking-tighter mb-2">SHADOW_VAULT</h4>
+            <p class="text-xs text-cyber-dim mb-6 leading-relaxed">Secure end-to-end encrypted password storage built with Rust and WASM for maximum integrity.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="text-[9px] font-mono px-2 py-1 bg-cyber-green/5 border border-cyber-green/20 text-cyber-green rounded-lg uppercase">Rust</span>
+              <span class="text-[9px] font-mono px-2 py-1 bg-cyber-green/5 border border-cyber-green/20 text-cyber-green rounded-lg uppercase">Security</span>
+            </div>
+            <a href="https://github.com/saif76r" target="_blank" class="group/link inline-flex items-center gap-3 text-[10px] font-mono text-cyber-green border border-cyber-green/30 px-4 py-2 rounded-xl hover:bg-cyber-green hover:text-cyber-black transition-all">
+              VIEW REPOSITORY <i data-lucide="github" class="w-3 h-3 group-hover/link:rotate-12 transition-transform"></i>
+            </a>
+          </div>
+
+          <div class="cyber-card reveal-scale" style="transition-delay: 0.1s;">
+            <div class="card-title">Project // 02</div>
+            <h4 class="text-2xl font-black text-cyber-text italic uppercase tracking-tighter mb-2">MOON_EXPLOIT</h4>
+            <p class="text-xs text-cyber-dim mb-6 leading-relaxed">Advanced reconnaissance framework for identifying misconfigured cloud assets in CI/CD pipelines.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="text-[9px] font-mono px-2 py-1 bg-cyber-purple/5 border border-cyber-purple/20 text-cyber-purple rounded-lg uppercase">Golang</span>
+              <span class="text-[9px] font-mono px-2 py-1 bg-cyber-purple/5 border border-cyber-purple/20 text-cyber-purple rounded-lg uppercase">Cloud</span>
+            </div>
+            <a href="https://github.com/saif76r" target="_blank" class="group/link inline-flex items-center gap-3 text-[10px] font-mono text-cyber-text border border-cyber-border px-4 py-2 rounded-xl hover:border-cyber-purple hover:bg-cyber-purple/10 transition-all">
+              VIEW REPOSITORY <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+
+          <div class="cyber-card-green reveal-scale" style="transition-delay: 0.2s;">
+            <div class="card-title-green">Project // 03</div>
+            <h4 class="text-2xl font-black text-cyber-text italic uppercase tracking-tighter mb-2">PULSE_MONITOR</h4>
+            <p class="text-xs text-cyber-dim mb-6 leading-relaxed">Real-time network traffic analyzer with AI-based anomaly detection for detecting lateral movement.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span class="text-[9px] font-mono px-2 py-1 bg-cyber-green/5 border border-cyber-green/20 text-cyber-green rounded-lg uppercase">Python</span>
+              <span class="text-[9px] font-mono px-2 py-1 bg-cyber-green/5 border border-cyber-green/20 text-cyber-green rounded-lg uppercase">AI</span>
+            </div>
+            <a href="https://github.com/saif76r" target="_blank" class="group/link inline-flex items-center gap-3 text-[10px] font-mono text-cyber-green border border-cyber-green/30 px-4 py-2 rounded-xl hover:bg-cyber-green hover:text-cyber-black transition-all">
+              VIEW REPOSITORY <i data-lucide="github" class="w-3 h-3 group-hover/link:rotate-12 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Achievements Section -->
+      <section id="achievements" class="mt-32 pt-20 border-t border-cyber-border">
+        <div class="reveal mb-16">
+          <div class="flex items-center gap-6 mb-4">
+            <span class="text-cyber-purple font-mono text-lg font-bold">04</span>
+            <div class="h-[1px] flex-1 bg-cyber-border"></div>
+          </div>
+          <h2 class="text-4xl md:text-7xl font-black tracking-tight mb-6 uppercase italic">ACCREDITATION</h2>
+          <p class="text-zinc-500 font-mono text-sm max-w-xl uppercase tracking-widest opacity-60">Verified proof of expertise // 10 Secure Certificates</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Cert 1 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-purple transition-all duration-700 reveal-scale">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="hackar.jpeg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">Ethical Hacker</h4>
+                <p class="text-[10px] font-mono text-cyber-purple uppercase tracking-widest mt-1 opacity-80">cisco Academy // CERT_ID: 10293</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 2 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-red transition-all duration-700 reveal-scale" style="transition-delay: 0.1s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="fortinet.jpeg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">Fortinet Associate</h4>
+                <p class="text-[10px] font-mono text-cyber-red uppercase tracking-widest mt-1 opacity-80">Fortinet Training Institute // CERT_ID: 2274273812MM</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 3 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-green transition-all duration-700 reveal-scale" style="transition-delay: 0.2s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="opswat.jpeg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">ICIP</h4>
+                <p class="text-[10px] font-mono text-cyber-green uppercase tracking-widest mt-1 opacity-80">OPSWAT // CERT_ID: VQP5Vbwmaw</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 4 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-purple transition-all duration-700 reveal-scale" style="transition-delay: 0.3s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="data sc.jpeg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">Data Science & Analytics</h4>
+                <p class="text-[10px] font-mono text-cyber-purple uppercase tracking-widest mt-1 opacity-80">Hp Foundation // CERT_ID: 52241f88-9ca2-4cb8-aff 1-1957a0531648</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 5 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-red transition-all duration-700 reveal-scale" style="transition-delay: 0.4s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="micro.jpeg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">Microsoft Copilot </h4>
+                <p class="text-[10px] font-mono text-cyber-red uppercase tracking-widest mt-1 opacity-80">Microsoft // CERT_ID: 6210129</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 6 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-green transition-all duration-700 reveal-scale" style="transition-delay: 0.5s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="AI.jpeg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">AI Prompt Engineer Lv.1</h4>
+                <p class="text-[10px] font-mono text-cyber-green uppercase tracking-widest mt-1 opacity-80">AI CERTs // CERT_ID: 8247a0944c49</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 7 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-purple transition-all duration-700 reveal-scale" style="transition-delay: 0.6s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="https://picsum.photos/seed/cert7/800/450" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">CRTO</h4>
+                <p class="text-[10px] font-mono text-cyber-purple uppercase tracking-widest mt-1 opacity-80">ZERO-POINT // CERT_ID: 55492</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 8 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-red transition-all duration-700 reveal-scale" style="transition-delay: 0.7s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="https://picsum.photos/seed/cert8/800/450" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">CISA</h4>
+                <p class="text-[10px] font-mono text-cyber-red uppercase tracking-widest mt-1 opacity-80">ISACA // CERT_ID: 77102</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 9 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-green transition-all duration-700 reveal-scale" style="transition-delay: 0.8s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="https://picsum.photos/seed/cert9/800/450" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">AWS Security</h4>
+                <p class="text-[10px] font-mono text-cyber-green uppercase tracking-widest mt-1 opacity-80">AMAZON // CERT_ID: 11092</p>
+              </div>
+            </div>
+          </div>
+          <!-- Cert 10 -->
+          <div class="bg-cyber-dark/40 border border-cyber-border p-2 rounded-[30px] overflow-hidden group hover:border-cyber-purple transition-all duration-700 reveal-scale" style="transition-delay: 0.9s;">
+            <div class="aspect-video relative overflow-hidden rounded-[25px] bg-black">
+              <img src="https://picsum.photos/seed/cert10/800/450" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" referrerPolicy="no-referrer" />
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-black/80 flex flex-col justify-end p-6">
+                <h4 class="text-lg font-black text-white italic uppercase tracking-tighter">GSEC</h4>
+                <p class="text-[10px] font-mono text-cyber-purple uppercase tracking-widest mt-1 opacity-80">SANS // CERT_ID: 66192</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="mt-40 pt-20 border-t border-cyber-border mb-32">
+        <div class="reveal mb-16">
+          <div class="flex items-center gap-6 mb-4">
+            <span class="text-cyber-purple font-mono text-lg font-bold">04</span>
+            <div class="h-[1px] flex-1 bg-cyber-border"></div>
+          </div>
+          <h2 class="text-4xl md:text-7xl font-black tracking-tight mb-6 uppercase italic">HANDSHAKE</h2>
+          <p class="text-zinc-500 font-mono text-sm max-w-xl uppercase tracking-widest opacity-60">Init secure session // Encrypted link</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+          <div class="space-y-10 reveal">
+            <h3 class="text-5xl font-black uppercase italic italic tracking-tighter">Ready to <span class="text-cyber-purple">Enforce</span>?</h3>
+            <p class="text-cyber-dim text-lg leading-relaxed max-w-md">
+              Available for high-stakes security research, network audits, and architectural defense. Let's make your perimeter impenetrable.
+            </p>
+            <div class="space-y-8">
+              <div class="flex items-center gap-6 group cursor-pointer">
+                <div class="p-4 border border-cyber-border rounded-2xl group-hover:border-cyber-purple/40 transition-all">
+                  <i data-lucide="mail" class="text-cyber-purple w-6 h-6"></i>
+                </div>
+                <div>
+                  <p class="text-[10px] font-mono text-cyber-dim uppercase tracking-widest">Protocol Email</p>
+                  <p class="text-lg font-bold hover:text-cyber-purple transition-colors">root@saif.security</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-6 group cursor-pointer">
+                <div class="p-4 border border-cyber-border rounded-2xl group-hover:border-cyber-purple/40 transition-all">
+                  <i data-lucide="github" class="text-cyber-purple w-6 h-6"></i>
+                </div>
+                <div>
+                  <p class="text-[10px] font-mono text-cyber-dim uppercase tracking-widest">Git Node</p>
+                  <p class="text-lg font-bold hover:text-cyber-purple transition-colors">saif76r</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-cyber-dark/40 border border-cyber-purple/30 p-12 rounded-[50px] reveal-scale shadow-3xl backdrop-blur-xl">
+            <form class="space-y-8" onsubmit="event.preventDefault()">
+              <div class="grid grid-cols-2 gap-8">
+                <div class="space-y-2">
+                  <label class="text-[10px] font-mono text-cyber-dim uppercase tracking-widest ml-1">Identity</label>
+                  <input type="text" placeholder="WHOAMI" class="w-full bg-cyber-black/40 border border-cyber-border p-5 rounded-2xl focus:border-cyber-purple transition-all outline-none font-mono text-sm" />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-[10px] font-mono text-cyber-dim uppercase tracking-widest ml-1">Source Email</label>
+                  <input type="email" placeholder="SENDER_MAIL" class="w-full bg-cyber-black/40 border border-cyber-border p-5 rounded-2xl focus:border-cyber-purple transition-all outline-none font-mono text-sm" />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-mono text-cyber-dim uppercase tracking-widest ml-1">Message Packet</label>
+                <textarea rows="5" placeholder="ENCRYPT_YOUR_THOUGHTS" class="w-full bg-cyber-black/40 border border-cyber-border p-5 rounded-2xl focus:border-cyber-purple transition-all outline-none resize-none font-mono text-sm"></textarea>
+              </div>
+              <button class="group relative w-full overflow-hidden bg-cyber-purple text-white font-black py-6 rounded-2xl uppercase tracking-[6px] transition-all hover:scale-[1.02] active:scale-[0.98]">
+                <span class="relative z-10">TRANSMIT PACKET</span>
+                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="py-20 px-6 text-center border-t border-cyber-border mt-20 bg-cyber-black">
+      <div class="flex flex-col items-center gap-6">
+        <div class="w-12 h-12 bg-cyber-purple/10 border border-cyber-purple/40 rounded-full flex items-center justify-center animate-pulse">
+           <i data-lucide="shield" class="text-cyber-purple w-6 h-6"></i>
+        </div>
+        <p class="text-[10px] font-mono text-cyber-dim uppercase tracking-[6px]">
+          &copy; 2026 // MEER MD. SAIF // VOID_PROTOCOL // IN
+        </p>
+      </div>
+    </footer>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // --- Terminal Animation ---
+      const terminalBox = document.querySelector('.terminal-content');
+      if (terminalBox) {
+        const terminalLines = [
+          '> INITIALIZING MOON_PROTOCOL...',
+          '> LOADING OFFENSIVE_TOOLS.SH...',
+          '> CHECKING BYPASS_VULNERABILITIES...',
+          '> STATUS: [ UNWAVERING ]',
+          '> TARGET: ABSOLUTE_PRIVACY',
+          '> SYSTEM_READY_FOR_ENGAGEMENT.',
+          '> WELCOME, RESEARCHER.'
+        ];
+        
+        let lineIndex = 0;
+        let charIndex = 0;
+        
+        const typeLine = () => {
+          if (lineIndex < terminalLines.length) {
+            const currentLine = terminalLines[lineIndex];
+            if (charIndex < currentLine.length) {
+              terminalBox.textContent += currentLine[charIndex];
+              charIndex++;
+              setTimeout(typeLine, 30);
+            } else {
+              terminalBox.textContent += '\n';
+              lineIndex++;
+              charIndex = 0;
+              setTimeout(typeLine, 500);
+            }
+          }
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            typeLine();
+            observer.disconnect();
+          }
+        }, { threshold: 0.1 });
+        
+        observer.observe(terminalBox);
+      }
+
+      // --- Mouse Parallax for Hero Image ---
+      const heroImage = document.querySelector('main img');
+      if (heroImage) {
+        window.addEventListener('mousemove', (e) => {
+          const { clientX, clientY } = e;
+          const { innerWidth, innerHeight } = window;
+          const x = (clientX - innerWidth / 2) / 30;
+          const y = (clientY - innerHeight / 2) / 30;
+          heroImage.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+        });
+      }
+
+      // --- Scroll Progress Bar ---
+      const progressBar = document.querySelector('.scroll-progress');
+      window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        if (progressBar) {
+          progressBar.style.transform = `scaleX(${scrolled / 100})`;
+        }
+      });
+
+      // --- Scroll reveal animations ---
+      const revealElements = document.querySelectorAll('.reveal, .reveal-scale');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+      revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+  </body>
+</html>
+
